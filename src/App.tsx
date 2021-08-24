@@ -4,8 +4,6 @@ const App:React.FC = () => {
 
   var tasks: string[] = ['Task 1', 'Task 2'];
 
- // type AddedTask = string;
-
   const [allTask , setAllTask] = React.useState<string[]>(tasks);
 
   const [inputValue, setInputValue] = React.useState<string>('');
@@ -27,50 +25,29 @@ const App:React.FC = () => {
           <button type="button" onClick={handleTask}>Add Task</button>
       <hr />
       <h2>All Tasks</h2>
-      <AllTask task={allTask} />
+      <AllTask allTasks={allTask} />
     </div>
   )
 }
 
-type TaskProp = {
-  task: string[];
+type TaskArr = {
+  allTasks: string[];
 };
 
 
 
-const AllTask: React.FC<TaskProp> = (taskProp: TaskProp) => {
+const AllTask: React.FC<TaskArr> = ({allTasks}: TaskArr) => {
   return (
     <div>
       <ul>
         {
-          taskProp.task.map(task => <li>{task}</li>)
+          allTasks.map(task => <li>{task}</li>)
         }
       </ul>
-      {JSON.stringify(taskProp.task)}
-    </div>
+       </div>
 
   )
 }
-
-// type AddingTaskProp = {
-//   addTaskProp : string;
-// }
-
-// type addTaskFn = (tasks: string[]) => void;
-
-// const AddTask = ({onAdd : addTaskFn} => {
-//   return (
-//     <div>
-//             <input id="search" type="text" />
-//     </div>
-//   )
-// })
-
-// const AddTask = {((addtask : AddingTaskProp), (onAdd : addTaskFn)) => {
-//   return (
-//     <label htmlFor="addTask" placeholder="Add Task"></label>
-//   )
-// }}
 
 
 
