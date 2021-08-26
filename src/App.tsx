@@ -1,14 +1,30 @@
 import React from 'react'
+import AllTask from './AllTask'
+import { Task } from './types'
 
 const App: React.FC = () => {
-  var tasks: string[] = ['Task 1', 'Task 2']
+  var tasks: Task[] = [
+    {
+      id: 1,
+      title: 'Task 1',
+      checkedStatus: false,
+    },
+    {
+      id: 2,
+      title: 'Task 2',
+      checkedStatus: false,
+    },
+  ]
 
-  const [allTask, setAllTask] = React.useState<string[]>(tasks)
+  const [allTask, setAllTask] = React.useState<Task[]>(tasks)
 
   const [inputValue, setInputValue] = React.useState<string>('')
 
+  let count = 2
+
   const handleTask = () => {
-    setAllTask([...allTask, inputValue])
+    count += 1
+    setAllTask([...allTask, { title: inputValue, id: count, checkedStatus: false }])
   }
 
   const handleInput = (event) => {
@@ -27,24 +43,8 @@ const App: React.FC = () => {
       </button>
       <hr />
       <h2>All Tasks</h2>
-      <AllTask allTasks={allTask} />
+      <AllTask allTasks={allTask} setalltask={setAllTask} />
       <h2>Completed Tasks</h2>
-    </div>
-  )
-}
-
-type TaskArr = {
-  allTasks: string[]
-}
-
-const AllTask: React.FC<TaskArr> = ({ allTasks }: TaskArr) => {
-  return (
-    <div>
-      <ul>
-        {allTasks.map((task) => (
-          <li>{task}</li>
-        ))}
-      </ul>
     </div>
   )
 }
