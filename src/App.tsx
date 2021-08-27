@@ -21,14 +21,11 @@ const App: React.FC = () => {
 
   const [inputValue, setInputValue] = React.useState<string>('')
 
-  // let count = 2;
-
+ 
   const handleTask = () => {
     
-    // let count = 2
-    // count = count + 1;
     setAllTask([...allTask, { title: inputValue, id: uuidv4(), checkedStatus: false }])
-    // console.log(count);
+    
   }
 
   const handleInput = (event) => {
