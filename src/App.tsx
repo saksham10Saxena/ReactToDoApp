@@ -1,16 +1,17 @@
 import React from 'react'
 import AllTask from './AllTask'
 import { Task } from './types'
+import { v4 as uuidv4 } from 'uuid';
 
 const App: React.FC = () => {
   var tasks: Task[] = [
     {
-      id: 1,
+      id: uuidv4(),
       title: 'Task 1',
       checkedStatus: false,
     },
     {
-      id: 2,
+      id: uuidv4(),
       title: 'Task 2',
       checkedStatus: false,
     },
@@ -20,11 +21,14 @@ const App: React.FC = () => {
 
   const [inputValue, setInputValue] = React.useState<string>('')
 
-  let count = 2
+  // let count = 2;
 
   const handleTask = () => {
-    count += 1
-    setAllTask([...allTask, { title: inputValue, id: count, checkedStatus: false }])
+    
+    // let count = 2
+    // count = count + 1;
+    setAllTask([...allTask, { title: inputValue, id: uuidv4(), checkedStatus: false }])
+    // console.log(count);
   }
 
   const handleInput = (event) => {
