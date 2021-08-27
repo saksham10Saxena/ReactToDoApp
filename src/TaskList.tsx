@@ -6,7 +6,7 @@ type TaskProp = {
   setalltask : React.Dispatch<React.SetStateAction<Task[]>>
 }
 
-const AllTask: React.FC<TaskProp> = ({ allTasks, setalltask }: TaskProp) => {
+const TaskList: React.FC<TaskProp> = ({ allTasks, setalltask }: TaskProp) => {
   const toggleCheck = (id: number): void => {
     const updatedArray: Task[] = allTasks.map((task: Task) => {
       if (id === task.id) {
@@ -32,6 +32,6 @@ const AllTask: React.FC<TaskProp> = ({ allTasks, setalltask }: TaskProp) => {
   )
 }
 
-export default AllTask
+export default TaskList
 
 

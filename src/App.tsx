@@ -1,5 +1,5 @@
 import React from 'react'
-import AllTask from './AllTask'
+import TaskList from './TaskList'
 import { Task } from './types'
 import { v4 as uuidv4 } from 'uuid';
 
@@ -44,7 +44,7 @@ const App: React.FC = () => {
       </button>
       <hr />
       <h2>All Tasks</h2>
-      <AllTask allTasks={allTask} setalltask={setAllTask} />
+      <TaskList allTasks={allTask} setalltask={setAllTask} />
       <h2>Completed Tasks</h2>
     </div>
   )
