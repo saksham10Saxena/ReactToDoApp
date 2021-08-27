@@ -1,14 +1,31 @@
 import React from 'react'
+import AllTask from './AllTask'
+import { Task } from './types'
+import { v4 as uuidv4 } from 'uuid';
 
 const App: React.FC = () => {
-  var tasks: string[] = ['Task 1', 'Task 2']
+  var tasks: Task[] = [
+    {
+      id: uuidv4(),
+      title: 'Task 1',
+      checkedStatus: false,
+    },
+    {
+      id: uuidv4(),
+      title: 'Task 2',
+      checkedStatus: false,
+    },
+  ]
 
-  const [allTask, setAllTask] = React.useState<string[]>(tasks)
+  const [allTask, setAllTask] = React.useState<Task[]>(tasks)
 
   const [inputValue, setInputValue] = React.useState<string>('')
 
+ 
   const handleTask = () => {
-    setAllTask([...allTask, inputValue])
+    
+    setAllTask([...allTask, { title: inputValue, id: uuidv4(), checkedStatus: false }])
+    
   }
 
   const handleInput = (event) => {
@@ -27,24 +44,8 @@ const App: React.FC = () => {
       </button>
       <hr />
       <h2>All Tasks</h2>
-      <AllTask allTasks={allTask} />
+      <AllTask allTasks={allTask} setalltask={setAllTask} />
       <h2>Completed Tasks</h2>
-    </div>
-  )
-}
-
-type TaskArr = {
-  allTasks: string[]
-}
-
-const AllTask: React.FC<TaskArr> = ({ allTasks }: TaskArr) => {
-  return (
-    <div>
-      <ul>
-        {allTasks.map((task) => (
-          <li>{task}</li>
-        ))}
-      </ul>
     </div>
   )
 }
