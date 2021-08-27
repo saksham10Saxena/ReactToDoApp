@@ -34,4 +34,4 @@ const AllTask: React.FC<TaskProp> = ({ allTasks, setalltask }: TaskProp) => {
 
 export default AllTask
 export const mytest = 3
-// export AllTask
+
