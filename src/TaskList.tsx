@@ -3,17 +3,24 @@ import { Task } from './types'
 
 type TaskProp = {
   allTasks: Task[]
-  setalltask : React.Dispatch<React.SetStateAction<Task[]>>
+    updateSingleTask: any
+  // change it to function type
+  //(updatedTask: Task): void
 }
 
-const TaskList: React.FC<TaskProp> = ({ allTasks, setalltask }: TaskProp) => {
+const TaskList: React.FC<TaskProp> = ({ allTasks, updateSingleTask }: TaskProp) => {
   const toggleCheck = (id: number): void => {
-    const updatedArray: Task[] = allTasks.map((task: Task) => {
-      if (id === task.id) {
-        return { ...task, checkedStatus: !task.checkedStatus }
-      } else return task
-    })
-    setalltask(updatedArray)
+    // calculate updated Task Object
+    const updatedTask = allTasks.filter((task: Task) => {
+      return task.id === id
+    });
+    const objectUpdatedTask = updatedTask[0];
+
+    //  .filter returns an array, although array has only one element, so we will access the first element
+    //  and toggle it
+    objectUpdatedTask.checkedStatus = !objectUpdatedTask.checkedStatus;
+
+    updateSingleTask(updatedTask)
   }
 
   return (
@@ -33,5 +40,3 @@ const TaskList: React.FC<TaskProp> = ({ allTasks, setalltask }: TaskProp) => {
 }
 
 export default TaskList
-
-
