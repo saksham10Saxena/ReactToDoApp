@@ -1,7 +1,7 @@
 import React from 'react'
-import AllTask from './AllTask'
+import TaskList from './TaskList'
 import { Task } from './types'
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from 'uuid'
 
 const App: React.FC = () => {
   var tasks: Task[] = [
@@ -21,20 +21,36 @@ const App: React.FC = () => {
 
   const [inputValue, setInputValue] = React.useState<string>('')
 
- 
   const handleTask = () => {
-    
     setAllTask([...allTask, { title: inputValue, id: uuidv4(), checkedStatus: false }])
-    
   }
 
   const handleInput = (event) => {
     setInputValue(event.target.value)
   }
 
+  const updateSingleTask = (updatedTask: Task) => {
+    //go inside allTask array state variable
+    // find the element from state variabele allTask and use array.map for changing a single value in the array
+    // then use setAllTask from useState to update the state variable
+
+    // For example - {id: 12, title : 'hello', checkStatus: true} 
+    // updated Object {id:12 , title: 'hello updated , checkStatus: false}
+
+    allTask.map((task) => {
+      if (task.id === updatedTask.id)
+      {
+        return updatedTask;
+      }
+      else return task;
+    })
+
+    setAllTask([...allTask]);
+  }
+
   return (
     <div className="App">
-      <h1>To Do App </h1>
+      <h1>To Do List </h1>
       <hr />
       <h2>Add Task</h2>
       <input type="text" value={inputValue} onChange={handleInput} />
@@ -44,8 +60,14 @@ const App: React.FC = () => {
       </button>
       <hr />
       <h2>All Tasks</h2>
-      <AllTask allTasks={allTask} setalltask={setAllTask} />
+      <TaskList allTasks={allTask} updateSingleTask={updateSingleTask} />
       <h2>Completed Tasks</h2>
+      <TaskList
+        allTasks={allTask.filter(function (allTask) {
+          return allTask.checkedStatus === true
+        })}
+        updateSingleTask={updateSingleTask}
+        />
     </div>
   )
 }
