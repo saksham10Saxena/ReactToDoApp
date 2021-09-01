@@ -1,11 +1,10 @@
 import React from 'react'
 import { Task } from './types'
+import '../src/App.css'
 
 type TaskProp = {
   allTasks: Task[]
-    updateSingleTask: any
-  // change it to function type
-  //(updatedTask: Task): void
+  updateSingleTask: (updatedTask: Task) => void
 }
 
 const TaskList: React.FC<TaskProp> = ({ allTasks, updateSingleTask }: TaskProp) => {
@@ -13,14 +12,14 @@ const TaskList: React.FC<TaskProp> = ({ allTasks, updateSingleTask }: TaskProp) 
     // calculate updated Task Object
     const updatedTask = allTasks.filter((task: Task) => {
       return task.id === id
-    });
-    const objectUpdatedTask = updatedTask[0];
+    })
+    const objectUpdatedTask = updatedTask[0]
 
     //  .filter returns an array, although array has only one element, so we will access the first element
     //  and toggle it
-    objectUpdatedTask.checkedStatus = !objectUpdatedTask.checkedStatus;
+    objectUpdatedTask.checkedStatus = !objectUpdatedTask.checkedStatus
 
-    updateSingleTask(updatedTask)
+    updateSingleTask(objectUpdatedTask)
   }
 
   return (
@@ -30,9 +29,10 @@ const TaskList: React.FC<TaskProp> = ({ allTasks, updateSingleTask }: TaskProp) 
           <input
             type="checkbox"
             checked={task.checkedStatus}
+            // onChange={() => toggleCheck(task.id) className={`${task.checkedStatus ? backgroundColor : 'blue'}`}}          />
             onChange={() => toggleCheck(task.id)}
           />
-          {task.title}
+          <span className={task.checkedStatus ? 'background-red' : ''}>{task.title}</span>
         </div>
       ))}
     </div>
