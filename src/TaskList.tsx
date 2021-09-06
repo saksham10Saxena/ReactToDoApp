@@ -9,15 +9,15 @@ type TaskProp = {
 }
 
 const TaskList: React.FC<TaskProp> = ({ allTasks, updateSingleTask }: TaskProp) => {
-
   const toggleCheck = (toggleCheck: Task): void => {
     updateSingleTask(toggleCheck)
   }
 
-
   return (
     <div>
-       <SingleTask allTask = {allTasks} togglecheck={toggleCheck}/>
+      {allTasks.map((task: Task) => (
+          <SingleTask singleTask = {task} togglecheck={toggleCheck}/>
+      ))}
     </div>
   )
 }
