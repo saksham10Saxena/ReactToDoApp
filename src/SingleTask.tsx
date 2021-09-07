@@ -9,13 +9,12 @@ type SingleTaskProp = {
 const SingleTask: React.FC<SingleTaskProp> = ({ singleTask, togglecheck }: SingleTaskProp) => {
   const toggleCheck = (): void => {
   
-    const objectSingleUpdatedTask = singleTask
+       singleTask.checkedStatus = !singleTask.checkedStatus
 
-    objectSingleUpdatedTask.checkedStatus = !objectSingleUpdatedTask.checkedStatus
-
-    togglecheck(objectSingleUpdatedTask)
+    togglecheck(singleTask)
   }
-  return (
+
+    return (
     <div>
       <input type="checkbox" checked={singleTask.checkedStatus} onChange={() => toggleCheck()} />
       <span className={singleTask.checkedStatus ? 'background-red' : ''}>{singleTask.title}</span>
