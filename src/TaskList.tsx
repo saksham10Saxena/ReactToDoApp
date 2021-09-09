@@ -16,7 +16,7 @@ const TaskList: React.FC<TaskProp> = ({ allTasks, updateSingleTask }: TaskProp) 
   return (
     <div>
       {allTasks.map((task: Task) => (
-          <SingleTask singleTask = {task} togglecheck={toggleCheck}/>
+          <SingleTask singleTask = {task} updatedTask={toggleCheck}/>
       ))}
     </div>
   )

@@ -3,20 +3,20 @@ import { Task } from './types'
 
 type SingleTaskProp = {
   singleTask: Task
-  togglecheck: (toggleCheck: Task) => void
+  updatedTask: (toggleCheck: Task) => void
 }
 
-const SingleTask: React.FC<SingleTaskProp> = ({ singleTask, togglecheck }: SingleTaskProp) => {
+const SingleTask: React.FC<SingleTaskProp> = ({ singleTask, updatedTask }: SingleTaskProp) => {
   const toggleCheck = (): void => {
     singleTask.checkedStatus = !singleTask.checkedStatus
-    togglecheck(singleTask)
+    updatedTask(singleTask)
   }
 
-  const [editTask, setEditTask] = React.useState<boolean>(false)
-  const [inputValueEditingTask, setInputValueEditingTask] = React.useState<string>(singleTask.title)
+  const [editTaskButtonClick, setEditTaskButtonClick] = React.useState<boolean>(false)
+  const [inputValueOfEditedTask, setInputValueOfEditedTask] = React.useState<string>(singleTask.title)
 
-  const handleEditingTaskInput = (event) => {
-    setInputValueEditingTask(event.target.value)
+  const handleEditingTaskInput = (event : React.ChangeEvent<HTMLInputElement>) => {
+    setInputValueOfEditedTask(event.target.value)
   }
 
   const handleEditedTaskInput = () => {
@@ -32,18 +32,22 @@ const SingleTask: React.FC<SingleTaskProp> = ({ singleTask, togglecheck }: Singl
   }
 
   const editMainState = () => {
-    singleTask.title = inputValueEditingTask
-    togglecheck(singleTask)
-    setEditTask(false)
+    singleTask.title = inputValueOfEditedTask
+    updatedTask(singleTask)
+    setEditTaskButtonClick(false)
   }
+
+  // const DeletingTask = () => {
+  //   delete singleTask
+  // }
 
   return (
     <div>
-      {editTask ? (
+      {editTaskButtonClick ? (
         <div>
           <input
             type="text"
-            value={inputValueEditingTask}
+            value={inputValueOfEditedTask}
             onChange={handleEditingTaskInput}
             onKeyDown={handleKeypress}
           />
@@ -61,9 +65,10 @@ const SingleTask: React.FC<SingleTaskProp> = ({ singleTask, togglecheck }: Singl
           <span className={singleTask.checkedStatus ? 'background-red' : ''}>
             {singleTask.title}
           </span>
-          <button type="button" onClick={() => setEditTask(true)}>
+          <button type="button" onClick={() => setEditTaskButtonClick(true)}>
             editTask
           </button>
+          {/* <button type="button" onClick={() => DeletingTask()}>Delete</button> */}
         </div>
       )}
     </div>
