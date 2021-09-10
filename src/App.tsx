@@ -25,15 +25,13 @@ const App: React.FC = () => {
     setAllTask([...allTask, { title: inputValue, id: uuidv4(), checkedStatus: false }])
   }
 
-  const handleInput = (event) => {
+  const handleInput = (event : React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value)
-    // if (event.keyCode === 13) {
-    //   handleTask();
   }
 
-  const handleKeypress = (event) => {
-    //it triggers by pressing the enter key
-    if (event.keyCode === 13) {
+  const handleKeypress = (event : React.KeyboardEvent<HTMLInputElement>) => {
+      // if (event.keyCode === 13) { // Keycode is deprecated so to overcome, we use event.key in next line
+      if (event.key === 'Enter') {
       handleTask()
     }
   }
@@ -55,8 +53,16 @@ const App: React.FC = () => {
     setAllTask([...newUpdatedTask])
   }
 
+  const deleteSingleTask = (deleteSingleTask: string) => {
+    const deletedSingleTask = allTask.filter((task: Task) => {
+      return task.id !== deleteSingleTask
+    })
+    setAllTask([...deletedSingleTask])
+
+  }
+
   return (
-      <div className="App">
+    <div className="App">
       <h1>To Do List </h1>
       <hr />
       <h2>Add Task</h2>
@@ -74,13 +80,18 @@ const App: React.FC = () => {
       <hr />
 
       <h2>All Tasks</h2>
-      <TaskList allTasks={allTask} updateSingleTask={updateSingleTask} />
+      <TaskList
+        allTasks={allTask}
+        updateSingleTask={updateSingleTask}
+        deleteSingleTask={deleteSingleTask}
+      />
       <h2>Completed Tasks</h2>
       <TaskList
         allTasks={allTask.filter(function (allTask) {
           return allTask.checkedStatus === true
         })}
         updateSingleTask={updateSingleTask}
+        deleteSingleTask={deleteSingleTask}
       />
     </div>
   )
