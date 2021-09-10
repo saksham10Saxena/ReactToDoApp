@@ -11,20 +11,12 @@ type TaskProp = {
 }
 
 const TaskList: React.FC<TaskProp> = ({ allTasks, updateSingleTask, deleteSingleTask }: TaskProp) => {
-  const updatedTask = (toggleCheck: Task): void => {
-    updateSingleTask(toggleCheck)
-  }
-
-  const deletetask = ((deleteTask: string): void => {
-        deleteSingleTask(deleteTask)
-    })    
-
   
 
   return (
     <div>
       {allTasks.map((task: Task) => (
-          <SingleTask singleTask = {task} updatedTask={updatedTask} deleteTask= {deletetask}/>
+          <SingleTask singleTask = {task} updatedTask={(toggleCheck) => updateSingleTask(toggleCheck)} deleteTask= {(deleteTask) => deleteSingleTask(deleteTask)}/>
       ))}
     </div>
   )
