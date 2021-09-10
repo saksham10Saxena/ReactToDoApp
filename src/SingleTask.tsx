@@ -4,52 +4,51 @@ import { Task } from './types'
 type SingleTaskProp = {
   singleTask: Task
   updatedTask: (toggleCheck: Task) => void
+  deleteTask : (deletetask : string) => void
 }
 
-const SingleTask: React.FC<SingleTaskProp> = ({ singleTask, updatedTask }: SingleTaskProp) => {
+const SingleTask: React.FC<SingleTaskProp> = ({ singleTask, updatedTask, deleteTask }: SingleTaskProp) => {
   const toggleCheck = (): void => {
     singleTask.checkedStatus = !singleTask.checkedStatus
     updatedTask(singleTask)
   }
 
-  const [editTaskButtonClick, setEditTaskButtonClick] = React.useState<boolean>(false)
-  const [inputValueOfEditedTask, setInputValueOfEditedTask] = React.useState<string>(singleTask.title)
-
-  const handleEditingTaskInput = (event : React.ChangeEvent<HTMLInputElement>) => {
-    setInputValueOfEditedTask(event.target.value)
-  }
+  const [isEditing, setIsEditing] = React.useState<boolean>(false)
+  const [inputValueOfEditedTask, setInputValueOfEditedTask] = React.useState<string>(
+    singleTask.title
+  )
 
   const handleEditedTaskInput = () => {
     editMainState()
   }
 
-  const handleKeypress = (event) => {
-    if (event.keyCode === 13) {
+  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
       handleEditedTaskInput()
     } else {
-      handleEditingTaskInput(event)
+      setInputValueOfEditedTask((event.target as HTMLInputElement).value)
     }
   }
 
   const editMainState = () => {
     singleTask.title = inputValueOfEditedTask
     updatedTask(singleTask)
-    setEditTaskButtonClick(false)
+    setIsEditing(false)
   }
 
-  // const DeletingTask = () => {
-  //   delete singleTask
-  // }
+  const DeletingTask = () => {
+     deleteTask(singleTask.id)
+  }
 
   return (
     <div>
-      {editTaskButtonClick ? (
+      {isEditing ? (
         <div>
           <input
             type="text"
             value={inputValueOfEditedTask}
-            onChange={handleEditingTaskInput}
-            onKeyDown={handleKeypress}
+            onChange={(event) => setInputValueOfEditedTask(event.target.value)}
+            onKeyDown={handleKeyPress}
           />
           <button type="button" onClick={() => editMainState()}>
             save
@@ -65,10 +64,12 @@ const SingleTask: React.FC<SingleTaskProp> = ({ singleTask, updatedTask }: Singl
           <span className={singleTask.checkedStatus ? 'background-red' : ''}>
             {singleTask.title}
           </span>
-          <button type="button" onClick={() => setEditTaskButtonClick(true)}>
+          <button type="button" onClick={() => setIsEditing(true)}>
             editTask
           </button>
-          {/* <button type="button" onClick={() => DeletingTask()}>Delete</button> */}
+          <button type="button" onClick={() => DeletingTask()}>
+            Delete
+          </button>
         </div>
       )}
     </div>

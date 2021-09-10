@@ -6,17 +6,25 @@ import SingleTask from './SingleTask'
 type TaskProp = {
   allTasks: Task[]
   updateSingleTask: (updatedTask: Task) => void
+  deleteSingleTask : (deleteSingleTask : string) => void
+
 }
 
-const TaskList: React.FC<TaskProp> = ({ allTasks, updateSingleTask }: TaskProp) => {
-  const toggleCheck = (toggleCheck: Task): void => {
+const TaskList: React.FC<TaskProp> = ({ allTasks, updateSingleTask, deleteSingleTask }: TaskProp) => {
+  const updatedTask = (toggleCheck: Task): void => {
     updateSingleTask(toggleCheck)
   }
+
+  const deletetask = ((deleteTask: string): void => {
+        deleteSingleTask(deleteTask)
+    })    
+
+  
 
   return (
     <div>
       {allTasks.map((task: Task) => (
-          <SingleTask singleTask = {task} updatedTask={toggleCheck}/>
+          <SingleTask singleTask = {task} updatedTask={updatedTask} deleteTask= {deletetask}/>
       ))}
     </div>
   )
